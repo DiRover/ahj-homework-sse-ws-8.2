@@ -1,16 +1,18 @@
 .container {
-    width: 800px;
-    height: 800px;
+    height: 50px;
+    width: 50px;
     border: 1px solid black;
-    margin: 0 auto;
-};
+}
 
 .modal {
-    width: 200px;
-    height: 200px;
-    border: 1px solid yellow;
-};
+    height: 300px;
+    width: 400px;
+    border: 2px solid yellow;
+    background-color: blueviolet;
+}
 
 .test {
-    outline: 1px solid green;
+    height: 70px;
+    width: 70px;
+    border: 2px solid green;
 }
