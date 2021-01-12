@@ -12,10 +12,12 @@ const ws = api.getWebSocket();
 modal.addEventListener('submit', (e) => {
   e.preventDefault();
   //console.log(inputForm.value);
-  const msg = inputForm.value;
+  const msg = { type: 'nickname', nickname: inputForm.value };
+  const data = JSON.stringify(msg)
+  console.log(msg)
   addForm.reset();
   if (ws.readyState === WebSocket.OPEN) {
-    ws.send(msg);
+    ws.send(data);
     } else {
     // Reconnect
     }

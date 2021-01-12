@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Xanh+Mono:ital@1&display=swap');
+
 .container {
     height: 50px;
     width: 50px;
@@ -5,10 +7,58 @@
 }
 
 .modal {
-    height: 300px;
+    box-sizing: border-box;
+    padding: 20px;
     width: 400px;
     border: 2px solid yellow;
-    background-color: blueviolet;
+    background-color: rgb(214, 207, 221);
+    left: 50%;
+    margin-left: -200px;
+    position: absolute;
+}
+
+.modal_title {
+    font-family: 'Xanh Mono', monospace;
+    display: block;
+    margin-top: 0;
+    text-align: center;
+}
+
+.form_field {
+    text-align: center;
+}
+
+.form_input {
+    font-family: 'Xanh Mono', monospace;
+    font-size: 1.6rem;
+    padding: 5px;
+    box-sizing: border-box;
+    height: 50px;
+    width: 200px;
+    border: none;
+    border-radius: 200px;
+}
+
+.form_input:focus {
+    outline: none;
+}
+
+.form_button {
+    font-family: 'Xanh Mono', monospace;
+    box-sizing: border-box;
+    font-weight: 700;
+    font-size: 1.4rem;
+    text-transform: uppercase;
+    padding: 0;
+    border: 0px;
+    height: 50px;
+    width: 130px;
+    margin-top: 20px;
+    margin-left: calc(50% - 65px);
+}
+
+.form_button:focus {
+    outline: rgb(212, 241, 152) solid 5px;
 }
 
 .test {
