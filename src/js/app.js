@@ -8,10 +8,11 @@ const addForm = document.querySelector('.add_form');
 const usersList = document.querySelector('.list');
 const chatForm = document.querySelector('.chat_form');
 const inputChat = document.querySelector('.chat_input');
+const charBox = document.querySelector('.chat_box');
 const url = 'ws://localhost:7070/ws';
 const api = new API(url);
 const ws = api.getWebSocket();
-let serverResponse;
+let nickname;
 /*
 window.addEventListener('load', () => {
   console.log('page loaded');
@@ -39,9 +40,17 @@ modal.addEventListener('submit', (e) => {
   
 });
 
-inputChat.addEventListener('change', (e)=> {
-  //e.preventDefault();
-  console.log(e);
+chatForm.addEventListener('submit', (e)=> {
+  e.preventDefault();
+  //console.log(inputChat.value)
+  const msg = { type: 'message', text: inputChat.value, nickname: api.userNickname };
+  const data = JSON.stringify(msg);
+  chatForm.reset();
+  if (ws.readyState === WebSocket.OPEN) {
+    ws.send(data);
+    } else {
+    // Reconnect
+  }
 })
 
 console.log('ok');
@@ -59,9 +68,10 @@ ws.addEventListener('open', () => {
 ws.addEventListener('message', (e) => {
   // handle evt.data
   api.responseHandler(e);
+  api.nicknameValid(e);
+  if (api.type === 'nickname is valid') modal.classList.add('hidden');
   if (api.type === 'user added') {
     console.log(api.serverResponse);
-    modal.classList.add('hidden');
     usersList.innerHTML='';
     api.serverResponse.forEach((user) => {
       const el = document.createElement('tr');
@@ -76,6 +86,13 @@ ws.addEventListener('message', (e) => {
       el.innerHTML = `${user}`;
       usersList.append(el);
     })
+  } else if (api.type === 'message') {
+    const el = document.createElement('div');
+    el.innerHTML = `
+    <h4>${api.serverResponse.name}</h4>
+    <p>${api.serverResponse.text}</p>`;
+    el.setAttribute('class', 'my_message');
+    charBox.append(el);
   }
 });
 
