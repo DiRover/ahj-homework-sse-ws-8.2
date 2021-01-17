@@ -1,20 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Xanh+Mono:ital@1&display=swap');
 
-.container {
-    height: 50px;
-    width: 50px;
-    border: 1px solid black;
-}
+
 
 .modal {
     box-sizing: border-box;
     padding: 20px;
     width: 400px;
     border: 2px solid yellow;
+    border-radius: 35px;
     background-color: rgb(214, 207, 221);
+    top: 30%;
     left: 50%;
     margin-left: -200px;
     position: absolute;
+    z-index: 9999;
 }
 
 .modal_title {
@@ -59,6 +58,70 @@
 
 .form_button:focus {
     outline: rgb(212, 241, 152) solid 5px;
+}
+
+.hidden {
+    display: none;
+}
+
+.container {
+    width: 100%;
+    position: relative;
+    z-index: 10;
+}
+
+.chat_box {
+     
+    width: 600px;
+    height: 400px;
+    margin: 0 auto;
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 35px;
+    background-color: rgb(214, 180, 136);
+}
+
+.chat_field {
+    box-sizing: border-box;
+    width: 500px;
+    position: absolute;
+    z-index: 999;
+    left: calc(50% - 250px);
+    top: 80%; 
+}
+
+.chat_input{    
+    font-family: 'Xanh Mono', monospace;
+    padding: 5px;
+    box-sizing: border-box;
+    height: 50px;
+    width: 100%;
+    border-radius: 200px;
+}
+
+.chat_input:focus {
+    outline: none;
+}
+
+.users_list {
+    position: absolute;
+    z-index: 1;
+    width: 200px;
+    height: 200px;
+    top: 100px;
+    left: calc(50% - 210px - 300px);
+    box-sizing: border-box;
+    border: 1px solid black;
+    border-radius: 35px 0 0 35px;
+    background-color: coral;
+    padding: 10px;
+    font-family: 'Xanh Mono', monospace;
+    font-weight: 700;
+}
+
+li {
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 .test {
