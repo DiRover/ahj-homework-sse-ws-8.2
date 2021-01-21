@@ -1,104 +1,95 @@
 import API from './api';
 
-const container = document.querySelector('[data-id="container"]');
 const modal = document.querySelector('.modal');
-const modalButton = document.querySelector('.form_button');
-const inputForm = document.querySelector('.form_input');
-const addForm = document.querySelector('.add_form');
+const inputForm = document.querySelector('.form-input');
+const addForm = document.querySelector('.add-form');
 const usersList = document.querySelector('.list');
-const chatForm = document.querySelector('.chat_form');
-const inputChat = document.querySelector('.chat_input');
-const charBox = document.querySelector('.chat_box');
+const chatForm = document.querySelector('.chat-form');
+const inputChat = document.querySelector('.chat-input');
+const charBox = document.querySelector('.chat-box');
+const tipNickname = document.querySelector('.tip-nickname');
+const tipMsg = document.querySelector('.tip-msg');
 const url = 'ws://localhost:7070/ws';
 const api = new API(url);
-const ws = api.getWebSocket();
-let nickname;
-/*
-window.addEventListener('load', () => {
-  console.log('page loaded');
-  const msg = { type: 'get users' };
-  const data = JSON.stringify(msg);
-  if (ws.readyState === WebSocket.OPEN) {
-    ws.send(data);
-  } else {
-    // Reconnect
-  }
-})
-*/
+let ws = api.getWebSocket();
 
-modal.addEventListener('submit', (e) => {
+addForm.addEventListener('submit', (e) => {
   e.preventDefault();
-  //console.log(inputForm.value);
-  const msg = { type: 'add user', nickname: inputForm.value };
-  const data = JSON.stringify(msg);
-  addForm.reset();
-  if (ws.readyState === WebSocket.OPEN) {
-    ws.send(data);
-    } else {
-    // Reconnect
+  const target = e.currentTarget.checkValidity();
+  if (!target) { // проверяем валидна/невалидна вся форма
+    tipNickname.classList.add('visible'); //если невалидна показываем ошибку
+    setTimeout(() => { // убираем подсказку
+      tipNickname.classList.remove('visible');
+    }, 3000);
+    return //прерываем дальнейшее выполнение
   }
-  
+  if (ws.readyState === WebSocket.OPEN) {
+    console.log(inputForm.value)
+    ws.send(api.getRequest('add user', inputForm.value)); //создаём и отправляем объект запроса на бэк
+    addForm.reset();
+    } else {
+    ws = api.getWebSocket(); // Reconnect
+  }
 });
 
 chatForm.addEventListener('submit', (e)=> {
   e.preventDefault();
-  //console.log(inputChat.value)
-  const msg = { type: 'message', text: inputChat.value, nickname: api.userNickname };
-  const data = JSON.stringify(msg);
-  chatForm.reset();
+  const target = e.currentTarget.checkValidity();
+  if (!target || !api.userNickname) { // проверяем валидна/невалидна вся форма
+    tipMsg.classList.add('visible'); //если невалидна показываем ошибку
+    setTimeout(() => { // убираем подсказку
+      tipMsg.classList.remove('visible');
+    }, 3000);
+    return //прерываем дальнейшее выполнение
+  }
+  
   if (ws.readyState === WebSocket.OPEN) {
-    ws.send(data);
+    ws.send(api.getRequest('message', api.userNickname, inputChat.value)); //создаём и отправляем объект запроса на бэк
+    chatForm.reset();
     } else {
-    // Reconnect
+    ws = api.getWebSocket(); // Reconnect
   }
 })
-
-console.log('ok');
-
-
 
 ws.addEventListener('open', () => {
   console.log('connected');
   // After this we can send messages
-  const msg = { type: 'get users' };
-  const data = JSON.stringify(msg);
-  ws.send(data);
+  ws.send(api.getRequest('get users')); //создаём и отправляем объект запроса на бэк
 });
 
 ws.addEventListener('message', (e) => {
-  // handle evt.data
-  api.responseHandler(e);
-  api.nicknameValid(e);
-  if (api.type === 'nickname is valid') modal.classList.add('hidden');
+  api.responseHandler(e); //обрабатываем запрос
+  api.nicknameValid(e); //проверяем оригинальность никнэйма
+  if (api.type === 'nickname is valid') modal.classList.add('hidden'); //если оригинально закрываем модалку
   if (api.type === 'user added') {
-    console.log(api.serverResponse);
     usersList.innerHTML='';
-    api.serverResponse.forEach((user) => {
-      const el = document.createElement('tr');
-      el.innerHTML = `<td>${user}</td>`;
+    api.serverResponse.forEach((user) => { //отрисовываем список юзеров и меняем имя текущего пользователя на You
+      const el = document.createElement('li');
+      el.innerHTML = user === 'You' ? `<span>${user}<span>` : `${user}`;
       usersList.append(el);
     })
   } else if (api.type === 'users list') {
-    console.log(api.serverResponse);
-    usersList.innerHTML='';
+    usersList.innerHTML=''; //продолжаем отрисовывать список юзеров
     api.serverResponse.forEach((user) => {
       const el = document.createElement('li');
-      el.innerHTML = `${user}`;
+      el.innerHTML = user === 'You' ? `<span>${user}<span>` : `${user}`;
       usersList.append(el);
     })
-  } else if (api.type === 'message') {
+  } else if (api.type === 'message') { //отрисовываем сообщения в чате
     const el = document.createElement('div');
+    const userNickname = api.userMessage(api.serverResponse.name);
+    api.userMessage(api.serverResponse.name);
     el.innerHTML = `
-    <h4>${api.serverResponse.name}</h4>
+    <h4 class=${api.userTitleStyle}>${userNickname} ${api.getDate()}</h4>
     <p>${api.serverResponse.text}</p>`;
-    el.setAttribute('class', 'my_message');
+    el.setAttribute('class', api.userMessageStyle);
     charBox.append(el);
   }
 });
 
-ws.addEventListener('close', (e) => {
-  console.log('connection closed', e);
-  // After this we can't send messages
+window.addEventListener('beforeunload', () => {//load при F5 не работает в Firefox
+  ws.send(api.getRequest('delete', api.userNickname)); //создаём и отправляем объект запроса на бэк
+  ws.close()    
 });
 
 ws.addEventListener('error', () => {

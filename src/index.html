@@ -6,23 +6,27 @@
     <title>Task_8.2</title>
 </head>
     <div class="modal">
-        <h2 class="modal_title">Enter your nickname</h2>
-        <form class="add_form" id="add_form">
-            <div class="form_field">
-                <input type="text" id='form_input' class="form_input"> 
+        <h2 class="modal-title">Enter your nickname</h2>
+        <p class="tip tip-nickname">Enter your nickname!</p>
+        <form class="add-form" id="add-form" novalidate>
+            <div class="form-field">
+                <input type="text" id='form-input' class="form-input" required> 
             </div>
         </form>
-        <button form="add_form" class="form_button">Continue!</button>    
+        <button form="add-form" class="form-button">Continue!</button>    
     </div>
     <div class="container">
-        <div class="chat_box"></div>
-        <div class="chat_field">
-            <form class="chat_form" id='chat_form'>
-                <input type="text" id="chat_input" class="chat_input" placeholder="Enter text">
-            </form>
-            <button form="chat_form" class="chat_button">Send</button>
+        <div class="chat-box"></div>
+        <div class="msg-box">
+            <div class="chat-field">
+                <form class="chat-form" id='chat-form' novalidate>
+                    <input type="text" id="chat-input" class="chat-input" placeholder="Enter text" required>
+                </form>
+                <button form="chat-form" class="chat-button material-icons">send</button>
+            </div>
+            <p class="tip-msg">Message field is empity or you doesn't enter your nickname!</p>
         </div>
-        <div class="users_list">
+        <div class="users-list">
             <ul class="list"></ul>
         </div>
     </div>

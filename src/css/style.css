@@ -1,5 +1,32 @@
 @import url('https://fonts.googleapis.com/css2?family=Xanh+Mono:ital@1&display=swap');
 
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
+.material-icons {
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;  /* Preferred icon size */
+    display: inline-block;
+    line-height: 1;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+  
+    /* Support for all WebKit browsers. */
+    -webkit-font-smoothing: antialiased;
+    /* Support for Safari and Chrome. */
+    text-rendering: optimizeLegibility;
+  
+    /* Support for Firefox. */
+    -moz-osx-font-smoothing: grayscale;
+  
+    /* Support for IE. */
+    font-feature-settings: 'liga';
+  }
+
 
 
 .modal {
@@ -9,25 +36,25 @@
     border: 2px solid yellow;
     border-radius: 35px;
     background-color: rgb(214, 207, 221);
-    top: 30%;
+    top: 10%;
     left: 50%;
     margin-left: -200px;
     position: absolute;
     z-index: 9999;
 }
 
-.modal_title {
+.modal-title {
     font-family: 'Xanh Mono', monospace;
     display: block;
     margin-top: 0;
     text-align: center;
 }
 
-.form_field {
+.form-field {
     text-align: center;
 }
 
-.form_input {
+.form-input {
     font-family: 'Xanh Mono', monospace;
     font-size: 1.6rem;
     padding: 5px;
@@ -38,11 +65,11 @@
     border-radius: 200px;
 }
 
-.form_input:focus {
+.form-input:focus {
     outline: none;
 }
 
-.form_button {
+.form-button {
     font-family: 'Xanh Mono', monospace;
     box-sizing: border-box;
     font-weight: 700;
@@ -56,7 +83,7 @@
     margin-left: calc(50% - 65px);
 }
 
-.form_button:focus {
+.form-button:focus {
     outline: rgb(212, 241, 152) solid 5px;
 }
 
@@ -70,46 +97,73 @@
     z-index: 10;
 }
 
-.chat_box {
-     
+.chat-box {
     width: 600px;
     height: 400px;
     margin: 0 auto;
-    padding: 10px;
+    padding: 30px;
     border: 1px solid black;
     border-radius: 35px;
     background-color: rgb(214, 180, 136);
+    overflow-y: auto;
 }
 
-.chat_field {
+.chat-field {
+    display: flex;
     box-sizing: border-box;
     width: 500px;
     position: absolute;
     z-index: 999;
     left: calc(50% - 250px);
-    top: 80%; 
+    top: 100%; 
 }
 
-.chat_input{    
+.chat-input{    
     font-family: 'Xanh Mono', monospace;
     padding: 5px;
     box-sizing: border-box;
     height: 50px;
-    width: 100%;
+    width: 500px;
     border-radius: 200px;
 }
 
-.chat_input:focus {
+.chat-input:focus {
     outline: none;
 }
 
-.users_list {
+.tip-nickname {
+    color: red;
+    visibility: hidden;
+    text-align: center;
+}
+
+.chat-button {
+    background-color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.chat-button {
+    outline: none;
+}
+
+.tip-msg {
+    color: red;
+    text-align: center;
+    visibility: hidden;
+}
+
+.visible {
+    visibility: visible;
+}
+
+.users-list {
     position: absolute;
     z-index: 1;
     width: 200px;
     height: 200px;
     top: 100px;
-    left: calc(50% - 210px - 300px);
+    left: calc(50% - 230px - 300px);
     box-sizing: border-box;
     border: 1px solid black;
     border-radius: 35px 0 0 35px;
@@ -117,6 +171,11 @@
     padding: 10px;
     font-family: 'Xanh Mono', monospace;
     font-weight: 700;
+    overflow-y: auto;
+}
+
+.list {
+    list-style-type: none;
 }
 
 li {
@@ -124,8 +183,31 @@ li {
     margin-bottom: 5px;
 }
 
-.my_message {
-    font-size: 1rem;
+span {
+    color:blue;
+}
+
+.current-user-message {
+    font-family: 'Xanh Mono', monospace;
+    text-align: right;
+}
+
+.current-user-title {
+    color: red;
+    margin-bottom: 3px;
+}
+
+.other-user-title {
+    font-family: 'Xanh Mono', monospace;
+    margin-bottom: 3px;
+}
+
+.other-user-message {
+    font-family: 'Xanh Mono', monospace;
+}
+
+p {
+    margin: 0;
 }
 
 .test {
