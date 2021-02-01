@@ -9,8 +9,7 @@ const inputChat = document.querySelector('.chat-input');
 const charBox = document.querySelector('.chat-box');
 const tipNickname = document.querySelector('.tip-nickname');
 const tipMsg = document.querySelector('.tip-msg');
-//const url = 'wss://localhost:7070/ws';
-const url = 'wss://websocket-serv.herokuapp.com/ws';  // wss://websocket-serv.herokuapp.com/ws
+const url = 'wss://websocket-serv.herokuapp.com/ws'; ////const url = 'wss://localhost:7070/ws';
 const api = new API(url);
 let ws = api.getWebSocket();
 
